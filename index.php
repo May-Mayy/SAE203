@@ -1,6 +1,7 @@
 <?php include './config.php'; ?>
 <?php include './includes.php'; ?>
 
+
 <section class="intro">
     <h2>Bienvenue sur le gestionnaire de sets LEGO</h2>
     <p>Découvrez, gérez et partagez votre collection LEGO avec la communauté.</p>
