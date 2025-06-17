@@ -1,8 +1,8 @@
 <?php
 $host = 'web-mmi2.iutbeziers.fr';
-$dbname = 'emilie.monard';
-$username = 'emilie.monard';
-$password = '22411865';
+$dbname = 'maylis.gaidot';
+$username = 'maylis.gaidot';
+$password = '22407104';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
 } catch (PDOException $e) {
