@@ -1,4 +1,9 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
+<?php
 $isLogged = isset($_SESSION['user']);
 ?>
 <!DOCTYPE html>
@@ -11,16 +16,22 @@ $isLogged = isset($_SESSION['user']);
 <body>
 <header>
     <h1>LEGO Collection</h1>
-    <nav>
-        <a href="./index.php">Accueil</a>
-        <a href="./set.php">Voir tous les sets</a>
-        <?php if ($isLogged): ?>
-            <a href="./detail_user.php?= $_SESSION['user']['id'] ?>">Mon profil</a>
-            <a href="./logout.php">Déconnexion</a>
-        <?php else: ?>
-            <a href="./connexion.php">Connexion</a>
-            <a href="./inscription.php">Inscription</a>
-        <?php endif; ?>
-    </nav>
+   <nav style="background: #ffc600; padding: 15px;">
+    <strong>LEGO Collection</strong>
+    <a href="index.php">Accueil</a>
+    <a href="sets.php">Voir tous les sets</a>
+
+   <?php if (isset($_SESSION['user_id'])): ?>
+    <a href="profil.php">Mon profil</a>
+    <a href="logout.php">Déconnexion</a>
+<?php else: ?>
+    <a href="connexion.php">Connexion</a>
+    <a href="inscription.php">Inscription</a>
+<?php endif; ?>
+
+</nav>
 </header>
 <main>
+
+
+

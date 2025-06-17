@@ -26,5 +26,6 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-session_start();
-?>
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}

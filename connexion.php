@@ -1,4 +1,8 @@
-<?php include 'includes/header.php'; ?>
+<?php
+session_start();
+include 'includes/header.php';
+?>
+
 <h2>Connexion</h2>
 <form method="POST" action="connexion.php">
     <input type="email" name="email" required placeholder="Email">
@@ -9,15 +13,29 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include 'config/config.php';
-    $stmt =  $conn->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->execute([$_POST['email']]);
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $stmt =  $conn->prepare("SELECT * FROM SAE203_user WHERE email = ?");
+    $stmt->execute([$email]);
     $user = $stmt->fetch();
-    if ($user && password_verify($_POST['password'], $user['mot_de_passe'])) {
-        $_SESSION['user'] = $user;
+
+    if ($user && password_verify($password, $user['password'])) {
+        // L'utilisateur est authentifié → on stocke dans la session
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+
         header("Location: index.php");
+        exit;
     } else {
-        echo "<p>Identifiants incorrects</p>";
+        echo "<p style='color:red;'>Identifiants incorrects</p>";
     }
 }
-include 'includes/footer.php';
+?>
+
+<?php 
+if (file_exists('includes/footer.php')) {
+    include 'includes/footer.php';
+}
 ?>
