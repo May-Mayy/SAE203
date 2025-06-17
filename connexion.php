@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt =  $conn->prepare("SELECT * FROM SAE203_user WHERE email = ?");
     $stmt->execute([$_POST['email']]);
     $user = $stmt->fetch();
-    if ($user && password_verify($_POST['password'], $user['mot_de_passe'])) {
+    if ($user && password_verify($_POST['password'], $user['password'])) {
         if (!$user['is_confirmed']) {
             echo "<p>Veuillez confirmer votre email avant de vous connecter.</p>";
         } else {

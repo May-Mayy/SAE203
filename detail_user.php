@@ -9,8 +9,8 @@ $user = $stmt->fetch();
 if (!$user): ?>
     <p>Utilisateur introuvable.</p>
 <?php else: ?>
-    <h2>Profil de <?= htmlspecialchars($user['pseudo']) ?></h2>
-    <p>Date d'inscription : <?= $user['date_inscription'] ?></p>
+    <h2>Profil de <?= htmlspecialchars($user['username']) ?></h2>
+    <p>Email : <?= htmlspecialchars($user['email']) ?></p>
 <?php endif; ?>
 
 <?php include 'includes/footer.php'; ?>
