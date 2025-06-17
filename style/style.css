@@ -42,3 +42,45 @@ footer {
     background: #eee;
     margin-top: 2em;
 }
+
+
+
+
+
+
+
+
+.sets-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.set-card {
+    background-color: white;
+    width: 220px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    padding: 10px;
+    transition: transform 0.2s;
+}
+
+.set-card:hover {
+    transform: scale(1.05);
+}
+
+.set-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.set-card h3 {
+    font-size: 16px;
+    color: black;
+    margin: 10px 0 0 0;
+}
+

@@ -23,7 +23,7 @@ $sets = $stmt->fetchAll();
 foreach ($sets as $set):
 ?>
     <div class="set-card">
-        <a href="detail_set.php?id=<?= $set['set_number'] ?>">
+        <a href="detail_set.php?id=<?= $set['id_set_number'] ?>">
             <img src="<?= $set['image_url'] ?>" alt="<?= htmlspecialchars($set['set_name']) ?>">
             <h3><?= htmlspecialchars($set['set_name']) ?></h3>
         </a>
