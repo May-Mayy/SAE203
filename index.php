@@ -7,8 +7,8 @@
     <p>Découvrez, gérez et partagez votre collection LEGO avec la communauté.</p>
     <div class="stats">
         <?php
-        $setsCount = $pdo->query("SELECT COUNT(*) FROM sets")->fetchColumn();
-        $usersCount = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+        $setsCount =  $conn->query("SELECT COUNT(*) FROM lego_sets")->fetchColumn();
+        $usersCount =  $conn->query("SELECT COUNT(*) FROM SAE203_user")->fetchColumn();
         ?>
         <p>Nombre de sets : <?= $setsCount ?></p>
         <p>Nombre d'utilisateurs : <?= $usersCount ?></p>
