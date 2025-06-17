@@ -9,12 +9,16 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include 'config/config.php';
-    $stmt =  $conn->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt =  $conn->prepare("SELECT * FROM SAE203_user WHERE email = ?");
     $stmt->execute([$_POST['email']]);
     $user = $stmt->fetch();
     if ($user && password_verify($_POST['password'], $user['mot_de_passe'])) {
-        $_SESSION['user'] = $user;
-        header("Location: index.php");
+        if (!$user['is_confirmed']) {
+            echo "<p>Veuillez confirmer votre email avant de vous connecter.</p>";
+        } else {
+            $_SESSION['user'] = $user;
+            header("Location: index.php");
+        }
     } else {
         echo "<p>Identifiants incorrects</p>";
     }
