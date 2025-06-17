@@ -1,5 +1,5 @@
-<?php include './config.php'; ?>
-<?php include './includes.php'; ?>
+<?php include 'config/config.php'; ?>
+<?php include 'includes/header.php'; ?>
 
 
 <section class="intro">
@@ -15,7 +15,6 @@
     </div>
 </section>
 
-<?php include './include.php'; ?>
 <style>
     .intro {
         text-align: center;
