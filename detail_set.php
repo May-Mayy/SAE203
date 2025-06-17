@@ -3,7 +3,7 @@
 
 <?php
 $id = $_GET['id'] ?? '';
-$stmt = $pdo->prepare("SELECT * FROM sets WHERE set_number = ?");
+$stmt =  $conn->prepare("SELECT * FROM sets WHERE set_number = ?");
 $stmt->execute([$id]);
 $set = $stmt->fetch();
 if (!$set): ?>

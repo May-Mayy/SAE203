@@ -17,7 +17,7 @@
 $theme = $_GET['theme'] ?? '';
 $sort = $_GET['sort'] ?? 'year_released';
 $query = "SELECT * FROM sets WHERE theme_name LIKE :theme ORDER BY $sort LIMIT 50";
-$stmt = $pdo->prepare($query);
+$stmt =  $conn->prepare($query);
 $stmt->execute(['theme' => "%$theme%"]);
 $sets = $stmt->fetchAll();
 foreach ($sets as $set):
