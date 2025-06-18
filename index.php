@@ -1,18 +1,20 @@
 <?php
-include './config.php';
-include './include/header.php';
+include './config/config.php';
+include './includes/functions.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+
 $nbSets = $pdo->query("SELECT COUNT(*) FROM lego_sets")->fetchColumn();
 $nbUsers = $pdo->query("SELECT COUNT(*) FROM SAE203_user")->fetchColumn();
+
 
 $lastCommented = $pdo->query("
     SELECT s.id_set_number, s.set_name, s.image_url
     FROM SAE203_comment c
-    JOIN lego_sets s ON s.id_set_number = c.id_set
+    JOIN lego_sets s ON s.id_set_number = c.id_set_number
     ORDER BY c.date_commentaire DESC
     LIMIT 3
 ")->fetchAll();
@@ -22,7 +24,7 @@ $lastCommented = $pdo->query("
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title> Gestionnaire de Sets LEGO </title>
+    <title>Gestionnaire de Sets LEGO</title>
     <style>
         body {
             background-color: #f0f0f0;
