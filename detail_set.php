@@ -63,6 +63,86 @@ if (!$set): ?>
     <?php endif; ?>
 
     <a href="sets.php" style="text-decoration: none; color: #007BFF;">← Retour à la liste des sets</a>
+    
+    <!-- SECTION COMMENTAIRES & NOTES -->
+    <hr style="margin:2em 0;">
+    <section class="comments" style="margin-bottom: 2em;">
+        <h3>Commentaires & notes</h3>
+
+        <?php
+        // Traitement de l'ajout/modif de commentaire
+        if ($id_user && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'], $_POST['rate'])) {
+            $comment = trim($_POST['comment']);
+            $rate = intval($_POST['rate']);
+            if ($rate >= 1 && $rate <= 5 && $comment !== '') {
+                // Vérifier si déjà un commentaire pour ce set
+                $check = $conn->prepare("SELECT id FROM SAE203_comment WHERE id_user = ? AND id_lego_set = ?");
+                $check->execute([$id_user, $id_set_number]);
+                if ($check->fetch()) {
+                    // Update
+                    $update = $conn->prepare("UPDATE SAE203_comment SET text=?, rate=?, post_date=NOW() WHERE id_user=? AND id_lego_set=?");
+                    $update->execute([$comment, $rate, $id_user, $id_set_number]);
+                    echo "<p style='color:green;'>Commentaire mis à jour !</p>";
+                } else {
+                    // Insert
+                    $insert = $conn->prepare("INSERT INTO SAE203_comment (id_user, id_lego_set, text, rate, post_date) VALUES (?, ?, ?, ?, NOW())");
+                    $insert->execute([$id_user, $id_set_number, $comment, $rate]);
+                    echo "<p style='color:green;'>Commentaire ajouté !</p>";
+                }
+            } else {
+                echo "<p style='color:red;'>Merci de remplir tous les champs et de mettre une note valide.</p>";
+            }
+        }
+
+        // Récupérer tous les commentaires pour ce set
+        $stmt = $conn->prepare("SELECT c.*, u.username FROM SAE203_comment c JOIN SAE203_user u ON c.id_user = u.id WHERE id_lego_set = ? ORDER BY post_date DESC");
+        $stmt->execute([$id_set_number]);
+        $comments = $stmt->fetchAll();
+
+        // Récupérer mon commentaire pour pré-remplir si besoin
+        $myComment = null;
+        if ($id_user) {
+            $stmt = $conn->prepare("SELECT * FROM SAE203_comment WHERE id_user = ? AND id_lego_set = ?");
+            $stmt->execute([$id_user, $id_set_number]);
+            $myComment = $stmt->fetch();
+        }
+        ?>
+
+        <?php if ($id_user): ?>
+            <form method="POST" style="margin-bottom: 1.5em;">
+                <label>Votre note :
+                    <select name="rate" required>
+                        <option value="">-</option>
+                        <?php for ($i=1;$i<=5;$i++): ?>
+                            <option value="<?= $i ?>" <?= isset($myComment['rate']) && $myComment['rate'] == $i ? 'selected' : '' ?>>
+                                <?= str_repeat('⭐', $i) ?>
+                            </option>
+                        <?php endfor; ?>
+                    </select>
+                </label><br>
+                <textarea name="comment" placeholder="Votre commentaire..." required rows="3" style="width:100%;margin-top:0.5em;"><?= htmlspecialchars($myComment['text'] ?? '') ?></textarea>
+                <br>
+                <button type="submit" style="margin-top:0.5em;"><?= $myComment ? 'Mettre à jour' : 'Envoyer' ?></button>
+            </form>
+        <?php else: ?>
+            <p><em>Connectez-vous pour laisser un commentaire.</em></p>
+        <?php endif; ?>
+
+        <?php if (count($comments) === 0): ?>
+            <p>Aucun commentaire pour ce set. Soyez le premier à donner votre avis !</p>
+        <?php else: ?>
+            <?php foreach($comments as $c): ?>
+                <div style="border-bottom:1px solid #ccc;padding:0.5em 0;">
+                    <strong>
+                        <a href="detail_user.php?id=<?= $c['id_user'] ?>" style="color:#007BFF;"><?= htmlspecialchars($c['username']) ?></a>
+                    </strong>
+                    <span><?= str_repeat('⭐', intval($c['rate'])) ?></span>
+                    <span style="color:#888;font-size:0.9em;">(<?= date('d/m/Y', strtotime($c['post_date'])) ?>)</span>
+                    <div><?= nl2br(htmlspecialchars($c['text'])) ?></div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </section>
 <?php endif; ?>
 
 <?php include 'includes/footer.php'; ?>

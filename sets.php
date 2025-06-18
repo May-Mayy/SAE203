@@ -2,55 +2,56 @@
 require 'config/config.php';
 include 'includes/header.php';
 
-// Recherche
+// Recherche et filtre
 $search = trim($_GET['search'] ?? '');
+$themeFilter = $_GET['theme'] ?? '';
 
 // Pagination
 $parPage = 10;
 $page = max(1, intval($_GET['page'] ?? 1));
 $offset = ($page - 1) * $parPage;
 
-// Requête pour compter les résultats
-if ($search) {
-    $sqlCount = "SELECT COUNT(*) FROM lego_sets WHERE set_name LIKE :search OR theme_name LIKE :search";
-    $stmtCount = $conn->prepare($sqlCount);
-    $stmtCount->execute(['search' => "%$search%"]);
-    $total = $stmtCount->fetchColumn();
-} else {
-    $sqlCount = "SELECT COUNT(*) FROM lego_sets";
-    $stmtCount = $conn->prepare($sqlCount);
-    $stmtCount->execute();
-    $total = $stmtCount->fetchColumn();
-}
+// 1. Récupérer les thèmes distincts
+$sqlThemes = "SELECT DISTINCT theme_name FROM lego_sets WHERE theme_name IS NOT NULL AND theme_name != '' ORDER BY theme_name ASC";
+$themes = $conn->query($sqlThemes)->fetchAll(PDO::FETCH_COLUMN);
 
+// 2. Préparer le WHERE dynamique
+$where = [];
+$params = [];
+
+// Recherche insensible à la casse sur set_name **et** theme_name
+if ($search) {
+    $where[] = "(LOWER(set_name) LIKE :search OR LOWER(theme_name) LIKE :search)";
+    $params['search'] = '%' . strtolower($search) . '%';
+}
+if ($themeFilter) {
+    $where[] = "theme_name = :theme";
+    $params['theme'] = $themeFilter;
+}
+$whereSQL = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+
+// 3. Compter les résultats
+$sqlCount = "SELECT COUNT(*) FROM lego_sets $whereSQL";
+$stmtCount = $conn->prepare($sqlCount);
+$stmtCount->execute($params);
+$total = $stmtCount->fetchColumn();
 $totalPages = max(1, ceil($total / $parPage));
 
-// Requête d'affichage
-if ($search) {
-    $sql = "SELECT * FROM lego_sets 
-            WHERE set_name LIKE :search OR theme_name LIKE :search 
-            ORDER BY year_released DESC
-            LIMIT :offset, :parPage";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindValue(':search', "%$search%", PDO::PARAM_STR);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->bindValue(':parPage', $parPage, PDO::PARAM_INT);
-    $stmt->execute();
-} else {
-    $sql = "SELECT * FROM lego_sets 
-            ORDER BY year_released DESC
-            LIMIT :offset, :parPage";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $stmt->bindValue(':parPage', $parPage, PDO::PARAM_INT);
-    $stmt->execute();
+// 4. Récupérer les sets à afficher
+$sql = "SELECT * FROM lego_sets $whereSQL ORDER BY year_released DESC LIMIT :offset, :parPage";
+$stmt = $conn->prepare($sql);
+foreach ($params as $key => $value) {
+    $stmt->bindValue(":$key", $value, PDO::PARAM_STR);
 }
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->bindValue(':parPage', $parPage, PDO::PARAM_INT);
+$stmt->execute();
 $sets = $stmt->fetchAll();
 ?>
 
 <h2>Liste des Sets LEGO</h2>
 
-<form method="GET" style="margin-bottom: 2em;">
+<form method="GET" style="margin-bottom: 2em; display: flex; gap: 1em; align-items: center;">
     <input 
         type="text" 
         name="search" 
@@ -58,6 +59,14 @@ $sets = $stmt->fetchAll();
         value="<?= htmlspecialchars($search) ?>"
         style="padding: 0.5em; width: 250px;"
     >
+    <select name="theme" style="padding: 0.5em;">
+        <option value="">Tous les thèmes</option>
+        <?php foreach ($themes as $theme): ?>
+            <option value="<?= htmlspecialchars($theme) ?>" <?= $theme === $themeFilter ? 'selected' : '' ?>>
+                <?= htmlspecialchars($theme) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
     <button type="submit" style="padding: 0.5em;">🔍 Rechercher</button>
 </form>
 
@@ -77,9 +86,10 @@ $sets = $stmt->fetchAll();
 <?php if ($totalPages > 1): ?>
 <nav class="pagination" style="margin-top: 2em; display: flex; gap: 0.5em; align-items: center;">
     <?php
-    $link = function($p, $txt = null) use ($search) {
+    $link = function($p, $txt = null) use ($search, $themeFilter) {
         $params = [];
         if ($search) $params['search'] = $search;
+        if ($themeFilter) $params['theme'] = $themeFilter;
         $params['page'] = $p;
         $txt = $txt ?? $p;
         return '<a href="?' . http_build_query($params) . '">' . $txt . '</a>';
@@ -90,12 +100,9 @@ $sets = $stmt->fetchAll();
     $end = min($totalPages, $start + $window - 1);
     if ($end - $start < $window - 1) $start = max(1, $end - $window + 1);
 
-    // << flèche vers début
     if ($page > 1) echo $link(1, '«');
-    // Page précédente
     if ($page > 1) echo $link($page - 1, '<');
 
-    // Pages du milieu
     for ($p = $start; $p <= $end; $p++) {
         if ($p == $page) {
             echo '<strong>' . $p . '</strong>';
@@ -104,9 +111,7 @@ $sets = $stmt->fetchAll();
         }
     }
 
-    // Page suivante
     if ($page < $totalPages) echo $link($page + 1, '>');
-    // >> flèche vers fin
     if ($page < $totalPages) echo $link($totalPages, '»');
     ?>
 </nav>
