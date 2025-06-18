@@ -1,6 +1,7 @@
 <?php
 include 'config/config.php';
-$pseudo = $_POST['pseudo'];
+
+$username = $_POST['username'] ?? '';
 $email = $_POST['email'];
 $pass = $_POST['password'];
 $confirm = $_POST['confirm'];
@@ -16,8 +17,10 @@ if ($stmt->rowCount() > 0) {
 }
 
 $hash = password_hash($pass, PASSWORD_DEFAULT);
-$stmt = $conn->prepare("INSERT INTO SAE203_user (pseudo, email, mot_de_passe, date_inscription) VALUES (?, ?, ?, NOW())");
-$stmt->execute([$pseudo, $email, $hash]);
+
+// S'il y a une colonne date_inscription dans ta BDD, garde-la. Sinon, enlève-la.
+$stmt = $conn->prepare("INSERT INTO SAE203_user (username, email, password) VALUES (?, ?, ?)");
+$stmt->execute([$username, $email, $hash]);
 
 header("Location: connexion.php");
 exit;

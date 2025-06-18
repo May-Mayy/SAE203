@@ -71,16 +71,22 @@ $sets = $stmt->fetchAll();
 </form>
 
 <div class="sets-list">
-<?php foreach ($sets as $set): ?>
-    <div class="set-card">
-        <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>">
-        <h3><?= htmlspecialchars($set['set_name']) ?> (<?= htmlspecialchars($set['id_set_number']) ?>)</h3>
-        <form action="detail_set.php" method="GET">
-            <input type="hidden" name="id" value="<?= htmlspecialchars($set['id_set_number']) ?>">
-            <button type="submit">🔍 Visualiser</button>
-        </form>
+<?php if (count($sets) === 0): ?>
+    <div style="padding:2em; text-align:center; color:#c00; font-size:1.2em;">
+        Aucun LEGO ne correspond à votre recherche 😢
     </div>
-<?php endforeach; ?>
+<?php else: ?>
+    <?php foreach ($sets as $set): ?>
+        <div class="set-card">
+            <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>">
+            <h3><?= htmlspecialchars($set['set_name']) ?> (<?= htmlspecialchars($set['id_set_number']) ?>)</h3>
+            <form action="detail_set.php" method="GET">
+                <input type="hidden" name="id" value="<?= htmlspecialchars($set['id_set_number']) ?>">
+                <button type="submit">🔍 Visualiser</button>
+            </form>
+        </div>
+    <?php endforeach; ?>
+<?php endif; ?>
 </div>
 
 <?php if ($totalPages > 1): ?>
