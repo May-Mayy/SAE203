@@ -113,3 +113,10 @@ $sets = $stmt->fetchAll();
 <?php endif; ?>
 
 <?php include 'includes/footer.php'; ?>
+
+<head>
+    <link rel="stylesheet" href="/style/header.css">
+    <link rel="stylesheet" href="/style/connexion.css">
+    <link rel="icon" type="image/png" href="/images/lego-logo-1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>

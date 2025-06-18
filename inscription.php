@@ -8,3 +8,10 @@
     <button type="submit">S'inscrire</button>
 </form>
 <?php include 'includes/footer.php'; ?>
+
+<head>
+    <link rel="stylesheet" href="/style/header.css">
+    <link rel="stylesheet" href="/style/inscription.css">
+    <link rel="icon" type="image/png" href="/images/lego-logo-1.png">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
