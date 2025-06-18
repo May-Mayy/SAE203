@@ -1,5 +1,5 @@
-<?php include 'config/config.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php include 'config.php'; ?>
+<?php include 'include.php'; ?>
 
 <?php
 $id = $_GET['id'] ?? '';
@@ -16,6 +16,16 @@ if (!$set): ?>
         <li>Pièces : <?= $set['number_of_parts'] ?></li>
         <li>Thème : <?= $set['theme_name'] ?></li>
     </ul>
+    <?php if (isset($_SESSION['user'])): ?>
+        <form method="POST" action="update_inventory.php">
+            <input type="hidden" name="set_number" value="<?= $set['set_number'] ?>">
+            <button type="submit" name="status" value="wishlist">Ajouter à la wish list</button>
+        </form>
+        <form method="POST" action="update_inventory.php">
+            <input type="hidden" name="set_number" value="<?= $set['set_number'] ?>">
+            <button type="submit" name="status" value="owned">Marquer comme possédé</button>
+        </form>
+    <?php endif; ?>
 <?php endif; ?>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes.php'; ?>

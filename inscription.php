@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'include.php'; ?>
 <h2>Créer un compte</h2>
 <form method="POST" action="verif_inscription.php">
     <input type="text" name="pseudo" required placeholder="Pseudo">
@@ -7,4 +7,4 @@
     <input type="password" name="confirm" required placeholder="Confirmer le mot de passe">
     <button type="submit">S'inscrire</button>
 </form>
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes.php'; ?>

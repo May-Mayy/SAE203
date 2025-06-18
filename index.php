@@ -1,5 +1,5 @@
 <?php include './config.php'; ?>
-<?php include './includes.php'; ?>
+<?php include './include.php'; ?>
 
 <section class="intro">
     <h2>Bienvenue sur le gestionnaire de sets LEGO</h2>
@@ -14,7 +14,7 @@
     </div>
 </section>
 
-<?php include './include.php'; ?>
+<?php include './includes.php'; ?>
 <style>
     .intro {
         text-align: center;

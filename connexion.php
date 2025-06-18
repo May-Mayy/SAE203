@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php include 'include.php'; ?>
 <h2>Connexion</h2>
 <form method="POST" action="connexion.php">
     <input type="email" name="email" required placeholder="Email">
@@ -8,7 +8,7 @@
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    include 'config/config.php';
+    include 'config.php';
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$_POST['email']]);
     $user = $stmt->fetch();
@@ -19,5 +19,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<p>Identifiants incorrects</p>";
     }
 }
-include 'includes/footer.php';
+include 'includes.php';
 ?>

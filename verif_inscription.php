@@ -1,5 +1,5 @@
 <?php
-include 'config/config.php';
+include 'config.php';
 $pseudo = $_POST['pseudo'];
 $email = $_POST['email'];
 $pass = $_POST['password'];

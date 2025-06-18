@@ -1,5 +1,5 @@
-<?php include 'config/config.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php include 'config.php'; ?>
+<?php include 'include.php'; ?>
 
 <h2>Liste des Sets LEGO</h2>
 
@@ -31,4 +31,4 @@ foreach ($sets as $set):
 <?php endforeach; ?>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+<?php include 'includes.php'; ?>
