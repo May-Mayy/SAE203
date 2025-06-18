@@ -1,6 +1,6 @@
 <?php
-include './config/config.php';
-include './includes/functions.php';
+include './config.php';
+include './include/header.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -22,7 +22,7 @@ $lastCommented = $pdo->query("
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Gestionnaire de Sets LEGO</title>
+    <title> Gestionnaire de Sets LEGO </title>
     <style>
         body {
             background-color: #f0f0f0;
