@@ -21,7 +21,7 @@ $isLogged = isset($_SESSION['user']);
     <a href="index.php">Accueil</a>
     <a href="sets.php">Voir tous les sets</a>
 
-   <?php if (isset($_SESSION['user_id'])): ?>
+   <?php if (isset($_SESSION['id_user'])): ?>
     <a href="profil.php">Mon profil</a>
     <a href="logout.php">Déconnexion</a>
 <?php else: ?>

@@ -23,9 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($password, $user['password'])) {
         // L'utilisateur est authentifié → on stocke dans la session
-        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['id_user'] = $user['id'];
         $_SESSION['username'] = $user['username'];
-
         header("Location: index.php");
         exit;
     } else {

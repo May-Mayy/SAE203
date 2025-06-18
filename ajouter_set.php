@@ -44,5 +44,5 @@ if ($row = $stmt->fetch()) {
     ]);
 }
 
-header("Location: catalogue.php?message=success&action=$action");
+header("Location: detail_set.php?id=" . urlencode($id_set_number));
 exit;
