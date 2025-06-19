@@ -115,8 +115,8 @@ $sets = $stmt->fetchAll();
 <?php include 'includes/footer.php'; ?>
 
 <head>
-    <link rel="stylesheet" href="./style/header.css">
-    <link rel="stylesheet" href="./style/sets.css">
+    <link rel="stylesheet" href="../SAE203/style/header.css">
+    <link rel="stylesheet" href="../SAE203/style/sets.css">
     <link rel="icon" type="image/png" href="/images/lego-logo-1.png">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
