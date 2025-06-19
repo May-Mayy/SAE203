@@ -11,7 +11,8 @@ $isLogged = isset($_SESSION['user']);
 <head>
     <meta charset="UTF-8">
     <title>Gestion LEGO</title>
-    <link rel="stylesheet" href="./style/style.css">
+
+    <img src="../" alt="LEGO Logo" class="logo">
 </head>
 <body>
 <header>
