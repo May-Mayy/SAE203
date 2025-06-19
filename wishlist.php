@@ -29,4 +29,4 @@ $sets = $stmt->fetchAll();
     </div>
 <?php endforeach; ?>
 
-<?php include 'includes/footer.php'; ?>
+

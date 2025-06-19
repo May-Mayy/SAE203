@@ -1,0 +1,59 @@
+/* header.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header {
+    background-color: #ffc600;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-family: 'Press Start 2P', cursive;
+}
+
+header h1 {
+    font-size: 16px;
+    color: #000;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav strong {
+    font-size: 14px;
+    color: #000;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    color: #000;
+    background-color: #fff;
+    padding: 10px 16px;
+    border-radius: 20px;
+    border: 2px solid white;
+    transition: all 0.2s ease-in-out;
+}
+
+nav a:hover {
+    background-color: #ffe24d;
+    transform: scale(1.05);
+}
+
+/* Logo LEGO */
+header img.logo {
+    height: 50px;
+    margin-right: 20px;
+}

@@ -31,4 +31,4 @@ $sets = $stmt->fetchAll();
 <?php endforeach; ?>
 </div>
 
-<?php include 'includes/footer.php'; ?>
+

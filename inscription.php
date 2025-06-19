@@ -7,4 +7,3 @@
     <input type="password" name="confirm" required placeholder="Confirmer le mot de passe">
     <button type="submit">S'inscrire</button>
 </form>
-<?php include 'includes/footer.php'; ?>

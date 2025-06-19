@@ -1,7 +1,7 @@
 <?php include 'config/config.php'; ?>
 <?php include 'includes/header.php'; ?>
 
-
+<div class="bienvenue">
 <section class="intro">
     <h2>Bienvenue sur le gestionnaire de sets LEGO</h2>
     <p>Découvrez, gérez et partagez votre collection LEGO avec la communauté.</p>
@@ -14,6 +14,12 @@
         <p>Nombre d'utilisateurs : <?= $usersCount ?></p>
     </div>
 </section>
+</div>
+<head>
+    <link rel="stylesheet" href="style/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+</head>
 
 <style>
     .intro {
@@ -39,4 +45,7 @@
     .stats p {
         font-size: 18px;
         color: #333;
+    }
+    .bienvenue {
+        margin-top: 100px;
     }

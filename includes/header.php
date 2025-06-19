@@ -11,19 +11,18 @@ $isLogged = isset($_SESSION['user']);
 <head>
     <meta charset="UTF-8">
     <title>Gestion LEGO</title>
+    <link rel="stylesheet" href="style/header.css">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <img src="../" alt="LEGO Logo" class="logo">
-</head>
 <body>
 <header>
     <h1>LEGO Collection</h1>
    <nav style="background: #ffc600; padding: 15px;">
     <strong>LEGO Collection</strong>
-    <a href="users.php">🔎 Rechercher un profil</a>
     <a href="index.php">Accueil</a>
     <a href="sets.php">Voir tous les sets</a>
 
-   <?php if (isset($_SESSION['id_user'])): ?>
+   <?php if (isset($_SESSION['user_id'])): ?>
     <a href="profil.php">Mon profil</a>
     <a href="logout.php">Déconnexion</a>
 <?php else: ?>
@@ -34,6 +33,4 @@ $isLogged = isset($_SESSION['user']);
 </nav>
 </header>
 <main>
-
-
 
