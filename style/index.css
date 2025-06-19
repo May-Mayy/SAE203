@@ -9,8 +9,6 @@ body {
     background-color: rgba(0,0,0,0.5);
     background-image: url('../includes/images/fond_4.png');
     background-size: 250px;
-
-
 }
 
 
@@ -85,4 +83,6 @@ body {
         opacity: 1;
     }
 }
+
+
 

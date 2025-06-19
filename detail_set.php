@@ -58,8 +58,12 @@ else:
     $wishers = $stmtWishers->fetchAll();
 ?>
 
-    <h2><?= htmlspecialchars($set['set_name']) ?></h2>
-    <div style="display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px;">
+    <div class="set-detail-card">
+    <div class="">
+    </div>
+    <div class="set-info">
+        <h2><?= htmlspecialchars($set['set_name']) ?></h2>
+
         <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>" style="max-width: 300px; border: 1px solid #ccc; background: #f9f9f9;">
         <div>
             <ul style="list-style: none; padding: 0; font-size: 16px;">
@@ -225,4 +229,97 @@ else:
     </section>
 <?php endif; ?>
 
-<?php include 'includes/footer.php'; ?>
+<style>
+.set-detail-card {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin: 2rem auto;
+  padding: 2rem;
+  max-width: 1000px;
+  gap: 2rem;
+}
+
+.set-image {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.set-image img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.set-info {
+  flex: 2 1 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.set-info h2 {
+  color: #d82323;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.set-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.set-info li {
+  margin-bottom: 0.5em;
+}
+
+.set-info strong {
+  color: #333;
+}
+
+.set-info .note {
+  color: gold;
+  font-size: 1.2em;
+}
+
+.set-info .note span {
+  color: #555;
+  font-size: 1em;
+}
+
+button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 20px;
+  background-color: #ffd500;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.3em 0.5em 0.3em 0;
+}
+
+button:hover {
+  background-color: #ffbb00;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+  color: #666;
+}
+</style>
+
+
+<!-- <?php include 'includes/footer.php'; ?> -->
