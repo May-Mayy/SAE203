@@ -12,7 +12,8 @@ function loadEnv($file) {
 }
 
 // Charger les variables du fichier .env
-$env = loadEnv('.env');
+// 🔥 C'est cette ligne-ci qu'il faut modifier :
+$env = loadEnv(__DIR__ . '/.env'); // <-- Utilisation du chemin absolu !
 
 // Connexion à la base avec les variables du .env
 try {
