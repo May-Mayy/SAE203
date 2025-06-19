@@ -5,6 +5,8 @@ include 'includes/header.php';
 // Recherche et filtre
 $search = trim($_GET['search'] ?? '');
 $themeFilter = $_GET['theme'] ?? '';
+$yearMin = $_GET['year_min'] ?? '';
+$yearMax = $_GET['year_max'] ?? '';
 
 // Pagination
 $parPage = 10;
@@ -14,6 +16,10 @@ $offset = ($page - 1) * $parPage;
 // 1. Récupérer les thèmes distincts
 $sqlThemes = "SELECT DISTINCT theme_name FROM lego_sets WHERE theme_name IS NOT NULL AND theme_name != '' ORDER BY theme_name ASC";
 $themes = $conn->query($sqlThemes)->fetchAll(PDO::FETCH_COLUMN);
+
+// 1b. Récupérer toutes les années distinctes
+$sqlYears = "SELECT DISTINCT year_released FROM lego_sets WHERE year_released IS NOT NULL AND year_released != '' ORDER BY year_released DESC";
+$years = $conn->query($sqlYears)->fetchAll(PDO::FETCH_COLUMN);
 
 // 2. Préparer le WHERE dynamique
 $where = [];
@@ -27,6 +33,14 @@ if ($search) {
 if ($themeFilter) {
     $where[] = "theme_name = :theme";
     $params['theme'] = $themeFilter;
+}
+if ($yearMin) {
+    $where[] = "year_released >= :year_min";
+    $params['year_min'] = $yearMin;
+}
+if ($yearMax) {
+    $where[] = "year_released <= :year_max";
+    $params['year_max'] = $yearMax;
 }
 $whereSQL = $where ? 'WHERE ' . implode(' AND ', $where) : '';
 
@@ -67,7 +81,26 @@ $sets = $stmt->fetchAll();
             </option>
         <?php endforeach; ?>
     </select>
+    <select name="year_min" style="padding: 0.5em;">
+        <option value="">Année min</option>
+        <?php foreach ($years as $year): ?>
+            <option value="<?= htmlspecialchars($year) ?>" <?= ($year == $yearMin) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($year) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <select name="year_max" style="padding: 0.5em;">
+        <option value="">Année max</option>
+        <?php foreach ($years as $year): ?>
+            <option value="<?= htmlspecialchars($year) ?>" <?= ($year == $yearMax) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($year) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
     <button type="submit" style="padding: 0.5em;">🔍 Rechercher</button>
+    <?php if ($search || $themeFilter || $yearMin || $yearMax): ?>
+        <a href="sets.php" style="padding:0.5em;color:#555;">Réinitialiser</a>
+    <?php endif; ?>
 </form>
 
 <div class="sets-list">
@@ -92,10 +125,12 @@ $sets = $stmt->fetchAll();
 <?php if ($totalPages > 1): ?>
 <nav class="pagination" style="margin-top: 2em; display: flex; gap: 0.5em; align-items: center;">
     <?php
-    $link = function($p, $txt = null) use ($search, $themeFilter) {
+    $link = function($p, $txt = null) use ($search, $themeFilter, $yearMin, $yearMax) {
         $params = [];
         if ($search) $params['search'] = $search;
         if ($themeFilter) $params['theme'] = $themeFilter;
+        if ($yearMin) $params['year_min'] = $yearMin;
+        if ($yearMax) $params['year_max'] = $yearMax;
         $params['page'] = $p;
         $txt = $txt ?? $p;
         return '<a href="?' . http_build_query($params) . '">' . $txt . '</a>';

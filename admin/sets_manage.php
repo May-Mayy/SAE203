@@ -2,10 +2,30 @@
 include '../includes/admin_auth.php';
 include '../includes/header.php';
 
-// Recherche et filtres
+?>
+
+// ← Flèche retour vers le dashboard (juste ici)
+<?php if (basename($_SERVER['PHP_SELF']) !== 'dashboard.php'): ?>
+    <a href="dashboard.php" style="
+        display: inline-block;
+        margin-bottom: 1em;
+        color: #007bff;
+        text-decoration: none;
+        font-size: 1.15em;
+        font-weight: bold;
+        transition: color 0.2s;
+    " onmouseover="this.style.color='#0056b3'" onmouseout="this.style.color='#007bff'">
+        &#8592; Retour au Dashboard
+    </a>
+<?php endif; ?>
+
+// Recherche et filtres 
+
+<?php
 $search = trim($_GET['search'] ?? '');
 $themeFilter = $_GET['theme'] ?? '';
-$yearFilter = $_GET['year'] ?? '';
+$yearMin = $_GET['year_min'] ?? '';
+$yearMax = $_GET['year_max'] ?? '';
 
 // Pagination
 $parPage = 20;
@@ -32,9 +52,13 @@ if ($themeFilter) {
     $where[] = "theme_name = :theme";
     $params['theme'] = $themeFilter;
 }
-if ($yearFilter) {
-    $where[] = "year_released = :year";
-    $params['year'] = $yearFilter;
+if ($yearMin) {
+    $where[] = "year_released >= :year_min";
+    $params['year_min'] = $yearMin;
+}
+if ($yearMax) {
+    $where[] = "year_released <= :year_max";
+    $params['year_max'] = $yearMax;
 }
 
 $whereSQL = $where ? 'WHERE ' . implode(' AND ', $where) : '';
@@ -77,16 +101,24 @@ $sets = $stmt->fetchAll();
             </option>
         <?php endforeach; ?>
     </select>
-    <select name="year" style="padding: 0.5em;">
-        <option value="">Toutes les années</option>
+    <select name="year_min" style="padding: 0.5em;">
+        <option value="">Année min</option>
         <?php foreach ($years as $year): ?>
-            <option value="<?= htmlspecialchars($year) ?>" <?= $year == $yearFilter ? 'selected' : '' ?>>
+            <option value="<?= htmlspecialchars($year) ?>" <?= ($year == $yearMin) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($year) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <select name="year_max" style="padding: 0.5em;">
+        <option value="">Année max</option>
+        <?php foreach ($years as $year): ?>
+            <option value="<?= htmlspecialchars($year) ?>" <?= ($year == $yearMax) ? 'selected' : '' ?>>
                 <?= htmlspecialchars($year) ?>
             </option>
         <?php endforeach; ?>
     </select>
     <button type="submit" style="padding: 0.5em;">🔍 Filtrer</button>
-    <?php if ($search || $themeFilter || $yearFilter): ?>
+    <?php if ($search || $themeFilter || $yearMin || $yearMax): ?>
         <a href="sets_manage.php" style="padding:0.5em;color:#555;">Réinitialiser</a>
     <?php endif; ?>
 </form>
@@ -116,11 +148,12 @@ $sets = $stmt->fetchAll();
 <?php if ($totalPages > 1): ?>
 <nav class="pagination" style="margin-top: 2em; display: flex; gap: 0.5em; align-items: center;">
     <?php
-    $link = function($p) use ($search, $themeFilter, $yearFilter) {
+    $link = function($p) use ($search, $themeFilter, $yearMin, $yearMax) {
         $params = [];
         if ($search) $params['search'] = $search;
         if ($themeFilter) $params['theme'] = $themeFilter;
-        if ($yearFilter) $params['year'] = $yearFilter;
+        if ($yearMin) $params['year_min'] = $yearMin;
+        if ($yearMax) $params['year_max'] = $yearMax;
         $params['page'] = $p;
         return '<a href="?' . http_build_query($params) . '">' . $p . '</a>';
     };

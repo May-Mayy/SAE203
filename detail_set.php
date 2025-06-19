@@ -16,7 +16,8 @@ $set = $stmt->fetch();
 if (!$set): ?>
     <p>Ce set n'existe pas ou est introuvable.</p>
     <a href="sets.php">← Retour à la liste</a>
-<?php else:
+<?php
+else:
     $id_user = $_SESSION['id_user'] ?? null;
     $isWishlisted = false;
     $isOwned = false;
@@ -31,16 +32,95 @@ if (!$set): ?>
         $stmt->execute(['id_user' => $id_user, 'id_set_number' => $id_set_number]);
         $isOwned = (bool)$stmt->fetch();
     }
+
+    // NOTE MOYENNE pour ce set
+    $sqlAvg = "SELECT AVG(rate) as avg_note, COUNT(*) as nb_notes FROM SAE203_comment WHERE id_lego_set = ?";
+    $stmtAvg = $conn->prepare($sqlAvg);
+    $stmtAvg->execute([$set['id_set_number']]);
+    $note = $stmtAvg->fetch();
+
+    // LISTE DES UTILISATEURS qui possèdent ce set
+    $sqlOwners = "SELECT u.id, u.username
+                  FROM SAE203_owned_set o
+                  JOIN SAE203_user u ON o.id_user = u.id
+                  WHERE o.id_set_number = ?";
+    $stmtOwners = $conn->prepare($sqlOwners);
+    $stmtOwners->execute([$set['id_set_number']]);
+    $owners = $stmtOwners->fetchAll();
+
+    // LISTE DES UTILISATEURS qui souhaitent ce set (wishlist)
+    $sqlWishers = "SELECT u.id, u.username
+                   FROM SAE203_wishlisted_set w
+                   JOIN SAE203_user u ON w.id_user = u.id
+                   WHERE w.id_set_number = ?";
+    $stmtWishers = $conn->prepare($sqlWishers);
+    $stmtWishers->execute([$set['id_set_number']]);
+    $wishers = $stmtWishers->fetchAll();
 ?>
+
     <h2><?= htmlspecialchars($set['set_name']) ?></h2>
     <div style="display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px;">
         <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>" style="max-width: 300px; border: 1px solid #ccc; background: #f9f9f9;">
-        <ul style="list-style: none; padding: 0; font-size: 16px;">
-            <li><strong>Année :</strong> <?= htmlspecialchars($set['year_released']) ?></li>
-            <li><strong>Pièces :</strong> <?= htmlspecialchars($set['number_of_parts']) ?></li>
-            <li><strong>Thème :</strong> <?= htmlspecialchars($set['theme_name']) ?></li>
-            <li><strong>Numéro de set :</strong> <?= htmlspecialchars($set['id_set_number']) ?></li>
-        </ul>
+        <div>
+            <ul style="list-style: none; padding: 0; font-size: 16px;">
+                <li><strong>Année :</strong> <?= htmlspecialchars($set['year_released']) ?></li>
+                <li><strong>Pièces :</strong> <?= htmlspecialchars($set['number_of_parts']) ?></li>
+                <li><strong>Thème :</strong> <?= htmlspecialchars($set['theme_name']) ?></li>
+                <li><strong>Numéro de set :</strong> <?= htmlspecialchars($set['id_set_number']) ?></li>
+            </ul>
+            
+            <!-- Affichage Note Moyenne -->
+            <div style="margin-bottom:1em;">
+                <strong>Note moyenne : </strong>
+                <?php if ($note['nb_notes'] > 0): ?>
+                    <span style="color:gold; font-size:1.3em;">
+                        <?= str_repeat('⭐', round($note['avg_note'])) ?>
+                        <span style="color:#555; font-size:1em;">
+                            (<?= number_format($note['avg_note'], 2, ',', ' ') ?>/5, 
+                            <?= $note['nb_notes'] ?> avis)
+                        </span>
+                    </span>
+                <?php else: ?>
+                    <span style="color:#888;">Aucune note pour ce set</span>
+                <?php endif; ?>
+            </div>
+
+            <!-- Liste des possesseurs -->
+            <div style="margin-bottom:1em;">
+                <strong>Utilisateurs possédant ce set :</strong>
+                <?php if (count($owners) > 0): ?>
+                    <ul style="margin:0.7em 0 0 1.1em; padding:0;">
+                    <?php foreach ($owners as $owner): ?>
+                        <li>
+                            <a href="detail_user.php?id=<?= $owner['id'] ?>" style="color:#006fdc;">
+                                <?= htmlspecialchars($owner['username']) ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <span style="color:#888;">Personne ne possède encore ce set</span>
+                <?php endif; ?>
+            </div>
+
+            <!-- Liste des wishers -->
+            <div style="margin-bottom:2em;">
+                <strong>Utilisateurs qui voudraient ce set :</strong>
+                <?php if (count($wishers) > 0): ?>
+                    <ul style="margin:0.7em 0 0 1.1em; padding:0;">
+                    <?php foreach ($wishers as $wisher): ?>
+                        <li>
+                            <a href="detail_user.php?id=<?= $wisher['id'] ?>" style="color:#00a04a;">
+                                <?= htmlspecialchars($wisher['username']) ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <span style="color:#888;">Personne n’a ajouté ce set à sa wishlist</span>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 
     <?php if ($id_user): ?>

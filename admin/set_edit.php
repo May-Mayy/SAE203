@@ -1,8 +1,26 @@
 <?php
 include '../includes/admin_auth.php';
 include '../includes/header.php';
+?>
+
+// ← Flèche retour vers le dashboard (juste ici)
+<?php if (basename($_SERVER['PHP_SELF']) !== 'dashboard.php'): ?>
+    <a href="dashboard.php" style="
+        display: inline-block;
+        margin-bottom: 1em;
+        color: #007bff;
+        text-decoration: none;
+        font-size: 1.15em;
+        font-weight: bold;
+        transition: color 0.2s;
+    " onmouseover="this.style.color='#0056b3'" onmouseout="this.style.color='#007bff'">
+        &#8592; Retour au Dashboard
+    </a>
+<?php endif; ?>
 
 // Récupérer le set si on édite
+
+<?php
 $id = $_GET['id'] ?? null;
 $set = null;
 $editMode = false;

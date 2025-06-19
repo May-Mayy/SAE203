@@ -15,7 +15,43 @@ $user = $stmt->fetch();
 if (!$user): ?>
     <p>Utilisateur introuvable.</p>
 <?php else: ?>
-    <h2>Bienvenue <?= htmlspecialchars($user['username']) ?> !</h2>
+    <h2>
+        Bienvenue <?= htmlspecialchars($user['username']) ?>
+        <?php if (!empty($user['is_admin'])): ?>
+            <span style="
+                background: #ffcb05;
+                color: #222;
+                border-radius: 6px;
+                padding: 0.15em 0.7em;
+                font-size: 0.8em;
+                margin-left: 0.5em;
+                font-weight: bold;
+                vertical-align: middle;
+                box-shadow: 0 1px 5px #ffe082;
+                letter-spacing: 1px;
+            ">👑 Admin</span>
+        <?php endif; ?>
+        !
+    </h2>
+
+    <?php if (!empty($user['is_admin'])): ?>
+        <a href="admin/dashboard.php" style="
+            display: inline-block;
+            padding: 0.5em 1.2em;
+            margin-bottom: 1.5em;
+            background: #333;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+            margin-top:0.5em;
+            transition: background 0.2s;
+        " onmouseover="this.style.background='#4c8bf5'" onmouseout="this.style.background='#333'">
+            🚦 Dashboard Admin
+        </a>
+    <?php endif; ?>
+
     <ul>
         <li>Email : <?= htmlspecialchars($user['email']) ?></li>
         <li>Compte confirmé : <?= $user['is_confirmed'] ? 'Oui' : 'Non' ?></li>
