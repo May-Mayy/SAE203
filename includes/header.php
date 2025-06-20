@@ -19,10 +19,11 @@ $isLogged = isset($_SESSION['user']);
     <h1>LEGO Collection</h1>
    <nav style="background: #ffc600; padding: 15px;">
     <strong>LEGO Collection</strong>
+    <a href="users.php">🔎 Rechercher un profil</a>
     <a href="index.php">Accueil</a>
     <a href="sets.php">Voir tous les sets</a>
 
-   <?php if (isset($_SESSION['user_id'])): ?>
+   <?php if (isset($_SESSION['id_user'])): ?>
     <a href="profil.php">Mon profil</a>
     <a href="logout.php">Déconnexion</a>
 <?php else: ?>

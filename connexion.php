@@ -14,7 +14,29 @@ include 'includes/header.php';
     </div>
 </div>
 
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    include 'config/config.php';
 
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $stmt =  $conn->prepare("SELECT * FROM SAE203_user WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+    
+
+    if ($user && password_verify($password, $user['password'])) {
+        // L'utilisateur est authentifié → on stocke dans la session
+        $_SESSION['id_user'] = $user['id'];
+        $_SESSION['username'] = $user['username'];
+        header("Location: index.php");
+        exit;
+    } else {
+        echo "<p style='color:red;'>Identifiants incorrects</p>";
+}
+}
+?>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
