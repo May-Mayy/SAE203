@@ -59,267 +59,267 @@ else:
 ?>
 
     <div class="set-detail-card">
-    <div class="">
-    </div>
-    <div class="set-info">
-        <h2><?= htmlspecialchars($set['set_name']) ?></h2>
+        <div class="">
+        </div>
+        <div class="set-info">
+            <h2><?= htmlspecialchars($set['set_name']) ?></h2>
 
-        <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>" style="max-width: 300px; border: 1px solid #ccc; background: #f9f9f9;">
-        <div>
-            <ul style="list-style: none; padding: 0; font-size: 16px;">
-                <li><strong>Année :</strong> <?= htmlspecialchars($set['year_released']) ?></li>
-                <li><strong>Pièces :</strong> <?= htmlspecialchars($set['number_of_parts']) ?></li>
-                <li><strong>Thème :</strong> <?= htmlspecialchars($set['theme_name']) ?></li>
-                <li><strong>Numéro de set :</strong> <?= htmlspecialchars($set['id_set_number']) ?></li>
-            </ul>
-            
-            <!-- Affichage Note Moyenne -->
-            <div style="margin-bottom:1em;">
-                <strong>Note moyenne : </strong>
-                <?php if ($note['nb_notes'] > 0): ?>
-                    <span style="color:gold; font-size:1.3em;">
-                        <?= str_repeat('⭐', round($note['avg_note'])) ?>
-                        <span style="color:#555; font-size:1em;">
-                            (<?= number_format($note['avg_note'], 2, ',', ' ') ?>/5, 
-                            <?= $note['nb_notes'] ?> avis)
+            <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>" style="max-width: 300px; border: 1px solid #ccc; background: #f9f9f9;">
+            <div>
+                <ul style="list-style: none; padding: 0; font-size: 16px;">
+                    <li><strong>Année :</strong> <?= htmlspecialchars($set['year_released']) ?></li>
+                    <li><strong>Pièces :</strong> <?= htmlspecialchars($set['number_of_parts']) ?></li>
+                    <li><strong>Thème :</strong> <?= htmlspecialchars($set['theme_name']) ?></li>
+                    <li><strong>Numéro de set :</strong> <?= htmlspecialchars($set['id_set_number']) ?></li>
+                </ul>
+
+                <!-- Affichage Note Moyenne -->
+                <div style="margin-bottom:1em;">
+                    <strong>Note moyenne : </strong>
+                    <?php if ($note['nb_notes'] > 0): ?>
+                        <span style="color:gold; font-size:1.3em;">
+                            <?= str_repeat('⭐', round($note['avg_note'])) ?>
+                            <span style="color:#555; font-size:1em;">
+                                (<?= number_format($note['avg_note'], 2, ',', ' ') ?>/5,
+                                <?= $note['nb_notes'] ?> avis)
+                            </span>
                         </span>
-                    </span>
-                <?php else: ?>
-                    <span style="color:#888;">Aucune note pour ce set</span>
-                <?php endif; ?>
-            </div>
+                    <?php else: ?>
+                        <span style="color:#888;">Aucune note pour ce set</span>
+                    <?php endif; ?>
+                </div>
 
-            <!-- Liste des possesseurs -->
-            <div style="margin-bottom:1em;">
-                <strong>Utilisateurs possédant ce set :</strong>
-                <?php if (count($owners) > 0): ?>
-                    <ul style="margin:0.7em 0 0 1.1em; padding:0;">
-                    <?php foreach ($owners as $owner): ?>
-                        <li>
-                            <a href="detail_user.php?id=<?= $owner['id'] ?>" style="color:#006fdc;">
-                                <?= htmlspecialchars($owner['username']) ?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                    </ul>
-                <?php else: ?>
-                    <span style="color:#888;">Personne ne possède encore ce set</span>
-                <?php endif; ?>
-            </div>
+                <!-- Liste des possesseurs -->
+                <div style="margin-bottom:1em;">
+                    <strong>Utilisateurs possédant ce set :</strong>
+                    <?php if (count($owners) > 0): ?>
+                        <ul style="margin:0.7em 0 0 1.1em; padding:0;">
+                            <?php foreach ($owners as $owner): ?>
+                                <li>
+                                    <a href="detail_user.php?id=<?= $owner['id'] ?>" style="color:#006fdc;">
+                                        <?= htmlspecialchars($owner['username']) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <span style="color:#888;">Personne ne possède encore ce set</span>
+                    <?php endif; ?>
+                </div>
 
-            <!-- Liste des wishers -->
-            <div style="margin-bottom:2em;">
-                <strong>Utilisateurs qui voudraient ce set :</strong>
-                <?php if (count($wishers) > 0): ?>
-                    <ul style="margin:0.7em 0 0 1.1em; padding:0;">
-                    <?php foreach ($wishers as $wisher): ?>
-                        <li>
-                            <a href="detail_user.php?id=<?= $wisher['id'] ?>" style="color:#00a04a;">
-                                <?= htmlspecialchars($wisher['username']) ?>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                    </ul>
-                <?php else: ?>
-                    <span style="color:#888;">Personne n’a ajouté ce set à sa wishlist</span>
-                <?php endif; ?>
+                <!-- Liste des wishers -->
+                <div style="margin-bottom:2em;">
+                    <strong>Utilisateurs qui voudraient ce set :</strong>
+                    <?php if (count($wishers) > 0): ?>
+                        <ul style="margin:0.7em 0 0 1.1em; padding:0;">
+                            <?php foreach ($wishers as $wisher): ?>
+                                <li>
+                                    <a href="detail_user.php?id=<?= $wisher['id'] ?>" style="color:#00a04a;">
+                                        <?= htmlspecialchars($wisher['username']) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <span style="color:#888;">Personne n’a ajouté ce set à sa wishlist</span>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
-
-    <?php if ($id_user): ?>
-        <form method="POST" action="ajouter_set.php" style="display:inline;">
-            <input type="hidden" name="id_set_number" value="<?= htmlspecialchars($set['id_set_number']) ?>">
-            <input type="hidden" name="quantity" value="1">
-            <button type="submit" name="action" value="wishlist" <?= $isWishlisted ? 'disabled' : '' ?>>
-                <?= $isWishlisted ? "Déjà dans la wishlist" : "💖 Ajouter à la wishlist" ?>
-            </button>
-        </form>
-        <form method="POST" action="ajouter_set.php" style="display:inline;">
-            <input type="hidden" name="id_set_number" value="<?= htmlspecialchars($set['id_set_number']) ?>">
-            <input type="hidden" name="quantity" value="1">
-            <button type="submit" name="action" value="possede" <?= $isOwned ? 'disabled' : '' ?>>
-                <?= $isOwned ? "Déjà possédé" : "📦 Ajouter à mes sets" ?>
-            </button>
-        </form>
-    <?php else: ?>
-        <p><em>Connecte-toi pour ajouter ce set à ta collection !</em></p>
-    <?php endif; ?>
-
-    <a href="sets.php" style="text-decoration: none; color: #007BFF;">← Retour à la liste des sets</a>
-    
-    <!-- SECTION COMMENTAIRES & NOTES -->
-    <hr style="margin:2em 0;">
-    <section class="comments" style="margin-bottom: 2em;">
-        <h3>Commentaires & notes</h3>
-
-        <?php
-        // Traitement de l'ajout/modif de commentaire
-        if ($id_user && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'], $_POST['rate'])) {
-            $comment = trim($_POST['comment']);
-            $rate = intval($_POST['rate']);
-            if ($rate >= 1 && $rate <= 5 && $comment !== '') {
-                // Vérifier si déjà un commentaire pour ce set
-                $check = $conn->prepare("SELECT id FROM SAE203_comment WHERE id_user = ? AND id_lego_set = ?");
-                $check->execute([$id_user, $id_set_number]);
-                if ($check->fetch()) {
-                    // Update
-                    $update = $conn->prepare("UPDATE SAE203_comment SET text=?, rate=?, post_date=NOW() WHERE id_user=? AND id_lego_set=?");
-                    $update->execute([$comment, $rate, $id_user, $id_set_number]);
-                    echo "<p style='color:green;'>Commentaire mis à jour !</p>";
-                } else {
-                    // Insert
-                    $insert = $conn->prepare("INSERT INTO SAE203_comment (id_user, id_lego_set, text, rate, post_date) VALUES (?, ?, ?, ?, NOW())");
-                    $insert->execute([$id_user, $id_set_number, $comment, $rate]);
-                    echo "<p style='color:green;'>Commentaire ajouté !</p>";
-                }
-            } else {
-                echo "<p style='color:red;'>Merci de remplir tous les champs et de mettre une note valide.</p>";
-            }
-        }
-
-        // Récupérer tous les commentaires pour ce set
-        $stmt = $conn->prepare("SELECT c.*, u.username FROM SAE203_comment c JOIN SAE203_user u ON c.id_user = u.id WHERE id_lego_set = ? ORDER BY post_date DESC");
-        $stmt->execute([$id_set_number]);
-        $comments = $stmt->fetchAll();
-
-        // Récupérer mon commentaire pour pré-remplir si besoin
-        $myComment = null;
-        if ($id_user) {
-            $stmt = $conn->prepare("SELECT * FROM SAE203_comment WHERE id_user = ? AND id_lego_set = ?");
-            $stmt->execute([$id_user, $id_set_number]);
-            $myComment = $stmt->fetch();
-        }
-        ?>
 
         <?php if ($id_user): ?>
-            <form method="POST" style="margin-bottom: 1.5em;">
-                <label>Votre note :
-                    <select name="rate" required>
-                        <option value="">-</option>
-                        <?php for ($i=1;$i<=5;$i++): ?>
-                            <option value="<?= $i ?>" <?= isset($myComment['rate']) && $myComment['rate'] == $i ? 'selected' : '' ?>>
-                                <?= str_repeat('⭐', $i) ?>
-                            </option>
-                        <?php endfor; ?>
-                    </select>
-                </label><br>
-                <textarea name="comment" placeholder="Votre commentaire..." required rows="3" style="width:100%;margin-top:0.5em;"><?= htmlspecialchars($myComment['text'] ?? '') ?></textarea>
-                <br>
-                <button type="submit" style="margin-top:0.5em;"><?= $myComment ? 'Mettre à jour' : 'Envoyer' ?></button>
+            <form method="POST" action="ajouter_set.php" style="display:inline;">
+                <input type="hidden" name="id_set_number" value="<?= htmlspecialchars($set['id_set_number']) ?>">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" name="action" value="wishlist" <?= $isWishlisted ? 'disabled' : '' ?>>
+                    <?= $isWishlisted ? "Déjà dans la wishlist" : "💖 Ajouter à la wishlist" ?>
+                </button>
+            </form>
+            <form method="POST" action="ajouter_set.php" style="display:inline;">
+                <input type="hidden" name="id_set_number" value="<?= htmlspecialchars($set['id_set_number']) ?>">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" name="action" value="possede" <?= $isOwned ? 'disabled' : '' ?>>
+                    <?= $isOwned ? "Déjà possédé" : "📦 Ajouter à mes sets" ?>
+                </button>
             </form>
         <?php else: ?>
-            <p><em>Connectez-vous pour laisser un commentaire.</em></p>
+            <p><em>Connecte-toi pour ajouter ce set à ta collection !</em></p>
         <?php endif; ?>
 
-        <?php if (count($comments) === 0): ?>
-            <p>Aucun commentaire pour ce set. Soyez le premier à donner votre avis !</p>
-        <?php else: ?>
-            <?php foreach($comments as $c): ?>
-                <div style="border-bottom:1px solid #ccc;padding:0.5em 0;">
-                    <strong>
-                        <a href="detail_user.php?id=<?= $c['id_user'] ?>" style="color:#007BFF;"><?= htmlspecialchars($c['username']) ?></a>
-                    </strong>
-                    <span><?= str_repeat('⭐', intval($c['rate'])) ?></span>
-                    <span style="color:#888;font-size:0.9em;">(<?= date('d/m/Y', strtotime($c['post_date'])) ?>)</span>
-                    <div><?= nl2br(htmlspecialchars($c['text'])) ?></div>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </section>
-<?php endif; ?>
+        <a href="sets.php" style="text-decoration: none; color: #007BFF;">← Retour à la liste des sets</a>
 
-<style>
-.set-detail-card {
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin: 2rem auto;
-  padding: 2rem;
-  max-width: 1000px;
-  gap: 2rem;
-}
+        <!-- SECTION COMMENTAIRES & NOTES -->
+        <hr style="margin:2em 0;">
+        <section class="comments" style="margin-bottom: 2em;">
+            <h3>Commentaires & notes</h3>
 
-.set-image {
-  flex: 1 1 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  padding: 1rem;
-}
+            <?php
+            // Traitement de l'ajout/modif de commentaire
+            if ($id_user && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment'], $_POST['rate'])) {
+                $comment = trim($_POST['comment']);
+                $rate = intval($_POST['rate']);
+                if ($rate >= 1 && $rate <= 5 && $comment !== '') {
+                    // Vérifier si déjà un commentaire pour ce set
+                    $check = $conn->prepare("SELECT id FROM SAE203_comment WHERE id_user = ? AND id_lego_set = ?");
+                    $check->execute([$id_user, $id_set_number]);
+                    if ($check->fetch()) {
+                        // Update
+                        $update = $conn->prepare("UPDATE SAE203_comment SET text=?, rate=?, post_date=NOW() WHERE id_user=? AND id_lego_set=?");
+                        $update->execute([$comment, $rate, $id_user, $id_set_number]);
+                        echo "<p style='color:green;'>Commentaire mis à jour !</p>";
+                    } else {
+                        // Insert
+                        $insert = $conn->prepare("INSERT INTO SAE203_comment (id_user, id_lego_set, text, rate, post_date) VALUES (?, ?, ?, ?, NOW())");
+                        $insert->execute([$id_user, $id_set_number, $comment, $rate]);
+                        echo "<p style='color:green;'>Commentaire ajouté !</p>";
+                    }
+                } else {
+                    echo "<p style='color:red;'>Merci de remplir tous les champs et de mettre une note valide.</p>";
+                }
+            }
 
-.set-image img {
-  max-width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  border-radius: 8px;
-}
+            // Récupérer tous les commentaires pour ce set
+            $stmt = $conn->prepare("SELECT c.*, u.username FROM SAE203_comment c JOIN SAE203_user u ON c.id_user = u.id WHERE id_lego_set = ? ORDER BY post_date DESC");
+            $stmt->execute([$id_set_number]);
+            $comments = $stmt->fetchAll();
 
-.set-info {
-  flex: 2 1 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+            // Récupérer mon commentaire pour pré-remplir si besoin
+            $myComment = null;
+            if ($id_user) {
+                $stmt = $conn->prepare("SELECT * FROM SAE203_comment WHERE id_user = ? AND id_lego_set = ?");
+                $stmt->execute([$id_user, $id_set_number]);
+                $myComment = $stmt->fetch();
+            }
+            ?>
 
-.set-info h2 {
-  color: #d82323;
-  font-size: 2rem;
-  margin: 0;
-}
+            <?php if ($id_user): ?>
+                <form method="POST" style="margin-bottom: 1.5em;">
+                    <label>Votre note :
+                        <select name="rate" required>
+                            <option value="">-</option>
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <option value="<?= $i ?>" <?= isset($myComment['rate']) && $myComment['rate'] == $i ? 'selected' : '' ?>>
+                                    <?= str_repeat('⭐', $i) ?>
+                                </option>
+                            <?php endfor; ?>
+                        </select>
+                    </label><br>
+                    <textarea name="comment" placeholder="Votre commentaire..." required rows="3" style="width:100%;margin-top:0.5em;"><?= htmlspecialchars($myComment['text'] ?? '') ?></textarea>
+                    <br>
+                    <button type="submit" style="margin-top:0.5em;"><?= $myComment ? 'Mettre à jour' : 'Envoyer' ?></button>
+                </form>
+            <?php else: ?>
+                <p><em>Connectez-vous pour laisser un commentaire.</em></p>
+            <?php endif; ?>
 
-.set-info ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 1rem;
-}
+            <?php if (count($comments) === 0): ?>
+                <p>Aucun commentaire pour ce set. Soyez le premier à donner votre avis !</p>
+            <?php else: ?>
+                <?php foreach ($comments as $c): ?>
+                    <div style="border-bottom:1px solid #ccc;padding:0.5em 0;">
+                        <strong>
+                            <a href="detail_user.php?id=<?= $c['id_user'] ?>" style="color:#007BFF;"><?= htmlspecialchars($c['username']) ?></a>
+                        </strong>
+                        <span><?= str_repeat('⭐', intval($c['rate'])) ?></span>
+                        <span style="color:#888;font-size:0.9em;">(<?= date('d/m/Y', strtotime($c['post_date'])) ?>)</span>
+                        <div><?= nl2br(htmlspecialchars($c['text'])) ?></div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </section>
+    <?php endif; ?>
 
-.set-info li {
-  margin-bottom: 0.5em;
-}
+    <style>
+        .set-detail-card {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            padding: 2rem;
+            max-width: 1000px;
+            gap: 2rem;
+        }
 
-.set-info strong {
-  color: #333;
-}
+        .set-image {
+            flex: 1 1 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 1rem;
+        }
 
-.set-info .note {
-  color: gold;
-  font-size: 1.2em;
-}
+        .set-image img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
 
-.set-info .note span {
-  color: #555;
-  font-size: 1em;
-}
+        .set-info {
+            flex: 2 1 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-button {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 20px;
-  background-color: #ffd500;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 0.3em 0.5em 0.3em 0;
-}
+        .set-info h2 {
+            color: #d82323;
+            font-size: 2rem;
+            margin: 0;
+        }
 
-button:hover {
-  background-color: #ffbb00;
-}
+        .set-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1rem;
+        }
 
-button[disabled] {
-  background-color: #ccc;
-  cursor: not-allowed;
-  color: #666;
-}
-</style>
+        .set-info li {
+            margin-bottom: 0.5em;
+        }
+
+        .set-info strong {
+            color: #333;
+        }
+
+        .set-info .note {
+            color: gold;
+            font-size: 1.2em;
+        }
+
+        .set-info .note span {
+            color: #555;
+            font-size: 1em;
+        }
+
+        button {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 20px;
+            background-color: #ffd500;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 0.3em 0.5em 0.3em 0;
+        }
+
+        button:hover {
+            background-color: #ffbb00;
+        }
+
+        button[disabled] {
+            background-color: #ccc;
+            cursor: not-allowed;
+            color: #666;
+        }
+    </style>
 
 
-<!-- <?php include 'includes/footer.php'; ?> -->
+    <!-- <?php include 'includes/footer.php'; ?> -->

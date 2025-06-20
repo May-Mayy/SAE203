@@ -15,6 +15,7 @@ $user = $stmt->fetch();
 if (!$user): ?>
     <p>Utilisateur introuvable.</p>
 <?php else: ?>
+    <div class="page-container">
     <h2>
         Bienvenue <?= htmlspecialchars($user['username']) ?>
         <?php if (!empty($user['is_admin'])): ?>
@@ -150,9 +151,162 @@ if (!$user): ?>
             </div>
         <?php endforeach; ?>
         </div>
+    </div>
     <?php endif; ?>
 
 <?php endif; ?>
+
+<style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Conteneur global sous le header */
+.page-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Titres */
+.page-container h2 {
+            font-family: 'Press Start 2P';
+
+  font-size: 1.5rem;
+  color: #d82323;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.page-container h3 {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  color: #222;
+}
+
+/* Listes de sets */
+.sets-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.set-card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+
+.set-card:hover {
+  transform: scale(1.02);
+}
+
+.set-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.set-card h4 {
+  font-size: 1rem;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.set-card p {
+  margin: 0.2rem 0 0.8rem;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.set-card button {
+  padding: 0.5rem;
+  background-color: #ffd500;
+  color: #000;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.set-card button:hover {
+  background-color: #ffbb00;
+}
+
+/* Admin badge et dashboard */
+.page-container .admin-badge {
+  background: #ffcb05;
+  color: #222;
+  border-radius: 6px;
+  padding: 0.15em 0.7em;
+  font-size: 0.8em;
+  margin-left: 0.5em;
+  font-weight: bold;
+  vertical-align: middle;
+  box-shadow: 0 1px 5px #ffe082;
+  letter-spacing: 1px;
+}
+
+.page-container .admin-link {
+  display: inline-block;
+  padding: 0.5em 1.2em;
+  background: #333;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  margin: 0.8em 0 1.5em;
+  transition: background 0.2s;
+}
+
+.page-container .admin-link:hover {
+  background: #4c8bf5;
+}
+
+/* Commentaires */
+.comments-list {
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.comment-card {
+  margin-bottom: 1rem;
+}
+
+.comment-card strong a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.comment-card span {
+  margin-left: 0.5rem;
+}
+
+/* Ajustement texte */
+.page-container ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.page-container li {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #444;
+}
+</style>
+
 
 <?php 
 if (file_exists('includes/footer.php')) {
