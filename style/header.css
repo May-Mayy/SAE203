@@ -52,8 +52,13 @@ nav a:hover {
     transform: scale(1.05);
 }
 
-/* Logo LEGO */
+/* Logo LEGO
 header img.logo {
     height: 50px;
     margin-right: 20px;
-}
+} */
+
+#logo {
+    height: 100px;
+    width: auto;
+} 

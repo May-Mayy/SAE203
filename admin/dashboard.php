@@ -1,7 +1,8 @@
 <?php
-include '../includes/admin_auth.php';
 include '../includes/header.php';
+include '../includes/admin_auth.php';
 ?>
+
 <div class="page-container">
 
 

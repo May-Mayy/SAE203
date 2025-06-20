@@ -3,7 +3,7 @@
 
 <div class="bienvenue">
 <section class="intro">
-    <h2>Bienvenue sur le gestionnaire de sets LEGO</h2>
+    <h2 id="text">Bienvenue sur le gestionnaire de sets LEGO</h2>
     <p>Découvrez, gérez et partagez votre collection LEGO avec la communauté.</p>
     <div class="stats">
         <?php
@@ -33,6 +33,7 @@
     .intro h2 {
         font-size: 24px;
         margin-bottom: 10px;
+    
     }
     .intro p {
         font-size: 16px;
@@ -48,4 +49,5 @@
     }
     .bienvenue {
         margin-top: 100px;
+       
     }

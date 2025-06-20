@@ -94,7 +94,7 @@ if (!$user): ?>
                 <?php foreach ($wishlist as $set): ?>
                     <div class="set-card">
                         <a href="detail_set.php?id=<?= urlencode($set['id_set_number']) ?>">
-                            <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>">
+                            <img class="img_profil" src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>">
                         </a>
                         <h4><?= htmlspecialchars($set['set_name']) ?> (<?= htmlspecialchars($set['id_set_number']) ?>)</h4>
                         <p>Quantité : <?= $set['quantity'] ?></p>
@@ -117,7 +117,7 @@ if (!$user): ?>
                 <?php foreach ($owned as $set): ?>
                     <div class="set-card">
                         <a href="detail_set.php?id=<?= urlencode($set['id_set_number']) ?>">
-                            <img src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>">
+                            <img class="img_profil" src="<?= htmlspecialchars($set['image_url']) ?>" alt="<?= htmlspecialchars($set['set_name']) ?>">
                         </a>
                         <h4><?= htmlspecialchars($set['set_name']) ?> (<?= htmlspecialchars($set['id_set_number']) ?>)</h4>
                         <p>Quantité : <?= $set['quantity'] ?></p>
@@ -303,6 +303,11 @@ if (!$user): ?>
         margin: 0.5rem 0;
         font-size: 1rem;
         color: #444;
+    }
+
+    .img_profil{
+        max-height: 350px;
+        width: auto;
     }
 </style>
 

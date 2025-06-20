@@ -8,30 +8,33 @@ $isLogged = isset($_SESSION['user']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Gestion LEGO</title>
-    <link rel="stylesheet" href="style/header.css">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/SAE203/style/header.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <body>
-<header>
-    <h1>LEGO Collection</h1>
-   <nav style="background: #ffc600; padding: 15px;">
-    <strong>LEGO Collection</strong>
-    <a href="users.php">🔎 Rechercher un profil</a>
-    <a href="index.php">Accueil</a>
-    <a href="sets.php">Voir tous les sets</a>
+    <header>
+        <!-- <h1>LEGO Collection</h1> -->
+        <nav style="background: #ffc600; padding: 15px;">
+            <div class="logo_container">
+                <img id="logo" src="/SAE203/includes/images/lego-logo-1.png" alt="Lego collection">
+            </div>
+            <strong>LEGO Collection</strong>
+            <a href="users.php">🔎 Rechercher un profil</a>
+            <a href="index.php">Accueil</a>
+            <a href="sets.php">Voir tous les sets</a>
 
-   <?php if (isset($_SESSION['id_user'])): ?>
-    <a href="profil.php">Mon profil</a>
-    <a href="logout.php">Déconnexion</a>
-<?php else: ?>
-    <a href="connexion.php">Connexion</a>
-    <a href="inscription.php">Inscription</a>
-<?php endif; ?>
+            <?php if (isset($_SESSION['id_user'])): ?>
+                <a href="profil.php">Mon profil</a>
+                <a href="logout.php">Déconnexion</a>
+            <?php else: ?>
+                <a href="connexion.php">Connexion</a>
+                <a href="inscription.php">Inscription</a>
+            <?php endif; ?>
 
-</nav>
-</header>
-<main>
-
+        </nav>
+    </header>
+    <main>
